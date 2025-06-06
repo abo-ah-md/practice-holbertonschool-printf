@@ -1,53 +1,44 @@
 #include <stdlib.h>
 #include <stdarg.h>
-#include "mian.h"
+#include <unistd.h>
+#include "main.h"
 /**
 *_printf - prints characters to stdout based on spesifer (%) format
-*@foramt: accept %c,%s,%i,%d
+*@format: accept %c,%s,%i,%d
 *Return: number of printed characters
 */
-
 int _printf(const char *format, ...)
 {
 int i;
 int print_count = 0;
 char *str;
 va_list args;
-va_start(args,format);
-
-for(i = 0; format[i]; i++)
+va_start(args, format);
+for (i = 0; format[i]; i++)
 {
-
-if(format[i] == '%' && format[i + 1])
+if (format[i] == '%' && format[i + 1])
 {
-
 i++;
-switch(format[i])
+switch (format[i])
 {
-
 case '%':
-write(1,"%",1);
+write(1, "%", 1);
 print_count++;
 break;
-
 case 'c':
 print_count += char_print((char) va_arg(args, int));
 break;
-
 case 's':
 str = va_arg(args, char *);
-if(str == NULL)
+if (str == NULL)
 str = "(nil)";
 print_count += string_print(str);
 break;
-
 case 'd':
 print_count += number_print(va_arg(args, int));
 break;
-
 case 'i':
 print_count += number_print(va_arg(args, int));
-
 break;
 default:
 write(1, "%", 1);
